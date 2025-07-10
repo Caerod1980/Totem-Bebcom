@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BebCom Lounge - Totem de Pedidos</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .header {
+            background: #000000;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 24px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .category {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .product {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+        }
+        .product button {
+            background: #000000;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .product button:hover {
+            background: #333333;
+        }
+        .cart {
+            position: fixed;
+            right: 20px;
+            top: 20px;
+            width: 300px;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 5px 0;
+        }
+        .cart input {
+            width: 100%;
+            padding: 5px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .checkout {
+            background: #28a745;
+            color: white;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .checkout:hover {
+            background: #218838;
+        }
+        .clear-cart {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .clear-cart:hover {
+            background: #c82333;
+        }
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            .cart {
+                position: static;
+                width: 100%;
+                margin-top: 20px;
+            }
+            .clear-cart {
+                position: static;
+                width: 100%;
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">BebCom Lounge - Totem de Pedidos</div>
+    <div class="container">
+        <div class="category" id="drinks-whisky">
+            <h2>Drinks Whisky</h2>
+            <div class="product"><span>Old Star - R$11,00</span><button onclick="addToCart('Old Star', 11.00)">Adicionar</button></div>
+            <div class="product"><span>Passport - R$18,00</span><button onclick="addToCart('Passport', 18.00)">Adicionar</button></div>
+            <div class="product"><span>Natu Nobilis - R$17,00</span><button onclick="addToCart('Natu Nobilis', 17.00)">Adicionar</button></div>
+            <div class="product"><span>White Horse - R$22,00</span><button onclick="addToCart('White Horse', 22.00)">Adicionar</button></div>
+            <div class="product"><span>Red Label - R$25,00</span><button onclick="addToCart('Red Label', 25.00)">Adicionar</button></div>
+            <div class="product"><span>Ballantine's - R$28,00</span><button onclick="addToCart('Ballantine\'s', 28.00)">Adicionar</button></div>
+            <div class="product"><span>Jack Daniel's - R$35,00</span><button onclick="addToCart('Jack Daniel\'s', 35.00)">Adicionar</button></div>
+        </div>
+        <div class="category" id="drinks-gin">
+            <h2>Drinks Gin</h2>
+            <div class="product"><span>Danoninho de Gin - R$17,00</span><button onclick="addToCart('Danoninho de Gin', 17.00)">Adicionar</button></div>
+            <div class="product"><span>Copão de Gin - R$17,00</span><button onclick="addToCart('Copão de Gin', 17.00)">Adicionar</button></div>
+        </div>
+        <div class="category" id="drinks-vodka">
+            <h2>Drinks Vodka</h2>
+            <div class="product"><span>Danoninho Corote - R$15,00</span><button onclick="addToCart('Danoninho Corote', 15.00)">Adicionar</button></div>
+            <div class="product"><span>Danoninho Askov - R$17,00</span><button onclick="addToCart('Danoninho Askov', 17.00)">Adicionar</button></div>
+            <div class="product"><span>Copão de Ice - R$17,00</span><button onclick="addToCart('Copão de Ice', 17.00)">Adicionar</button></div>
+            <div class="product"><span>Copão de Vodka - R$17,00</span><button onclick="addToCart('Copão de Vodka', 17.00)">Adicionar</button></div>
+        </div>
+        <div class="category" id="drinks-vinho">
+            <h2>Drinks Vinho</h2>
+            <div class="product"><span>Danoninho de Vinho - R$17,00</span><button onclick="addToCart('Danoninho de Vinho', 17.00)">Adicionar</button></div>
+        </div>
+        <div class="category" id="cervejas">
+            <h2>Cervejas</h2>
+            <div class="product"><span>Skol/Brahma - R$4,25</span><button onclick="addToCart('Skol/Brahma', 4.25)">Adicionar</button></div>
+            <div class="product"><span>Antarctica - R$4,25</span><button onclick="addToCart('Antarctica', 4.25)">Adicionar</button></div>
+            <div class="product"><span>Sub-Zero - R$4,25</span><button onclick="addToCart('Sub-Zero', 4.25)">Adicionar</button></div>
+            <div class="product"><span>Amstel - R$4,50</span><button onclick="addToCart('Amstel', 4.50)">Adicionar</button></div>
+            <div class="product"><span>Heineken - R$6,50</span><button onclick="addToCart('Heineken', 6.50)">Adicionar</button></div>
+            <div class="product"><span>Corona Long - R$8,50</span><button onclick="addToCart('Corona Long', 8.50)">Adicionar</button></div>
+            <div class="product"><span>Stella Long - R$7,00</span><button onclick="addToCart('Stella Long', 7.00)">Adicionar</button></div>
+            <div class="product"><span>Brahma Zero - R$5,00</span><button onclick="addToCart('Brahma Zero', 5.00)">Adicionar</button></div>
+            <div class="product"><span>Império - R$4,00</span><button onclick="addToCart('Império', 4.00)">Adicionar</button></div>
+            <div class="product"><span>Duplo Malte - R$4,50</span><button onclick="addToCart('Duplo Malte', 4.50)">Adicionar</button></div>
+            <div class="product"><span>Spaten - R$5,00</span><button onclick="addToCart('Spaten', 5.00)">Adicionar</button></div>
+            <div class="product"><span>Budweiser - R$5,10</span><button onclick="addToCart('Budweiser', 5.10)">Adicionar</button></div>
+            <div class="product"><span>Burguesa - R$4,00</span><button onclick="addToCart('Burguesa', 4.00)">Adicionar</button></div>
+            <div class="product"><span>Bavaria - R$3,50</span><button onclick="addToCart('Bavaria', 3.50)">Adicionar</button></div>
+            <div class="product"><span>Bavaria Latão - R$4,75</span><button onclick="addToCart('Bavaria Latão', 4.75)">Adicionar</button></div>
+            <div class="product"><span>Petra - R$3,90</span><button onclick="addToCart('Petra', 3.90)">Adicionar</button></div>
+            <div class="product"><span>Conti Malzbier - R$4,50</span><button onclick="addToCart('Conti Malzbier', 4.50)">Adicionar</button></div>
+            <div class="product"><span>Brahma Malz. - R$5,00</span><button onclick="addToCart('Brahma Malz.', 5.00)">Adicionar</button></div>
+            <div class="product"><span>Moinho Real - R$4,25</span><button onclick="addToCart('Moinho Real', 4.25)">Adicionar</button></div>
+            <div class="product"><span>Original - R$5,00</span><button onclick="addToCart('Original', 5.00)">Adicionar</button></div>
+            <div class="product"><span>Heineken Long - R$8,00</span><button onclick="addToCart('Heineken Long', 8.00)">Adicionar</button></div>
+            <div class="product"><span>Budweiser Long - R$7,50</span><button onclick="addToCart('Budweiser Long', 7.50)">Adicionar</button></div>
+            <div class="product"><span>Patagônia Long - R$8,50</span><button onclick="addToCart('Patagônia Long', 8.50)">Adicionar</button></div>
+            <div class="product"><span>Eisenbah IPA - R$8,50</span><button onclick="addToCart('Eisenbah IPA', 8.50)">Adicionar</button></div>
+            <div class="product"><span>Stella Gold - R$7,50</span><button onclick="addToCart('Stella Gold', 7.50)">Adicionar</button></div>
+            <div class="product"><span>Amstel Ultra - R$6,00</span><button onclick="addToCart('Amstel Ultra', 6.00)">Adicionar</button></div>
+            <div class="product"><span>Spaten Long - R$7,60</span><button onclick="addToCart('Spaten Long', 7.60)">Adicionar</button></div>
+            <div class="product"><span>Império Gold - R$8,00</span><button onclick="addToCart('Império Gold', 8.00)">Adicionar</button></div>
+            <div class="product"><span>Conti Zero Grau - R$3,50</span><button onclick="addToCart('Conti Zero Grau', 3.50)">Adicionar</button></div>
+        </div>
+        <div class="category" id="destilados">
+            <h2>Destilados</h2>
+            <div class="product"><span>Jurupinga - R$42,00</span><button onclick="addToCart('Jurupinga', 42.00)">Adicionar</button></div>
+            <div class="product"><span>Saquê - R$30,00</span><button onclick="addToCart('Saquê', 30.00)">Adicionar</button></div>
+            <div class="product"><span>Tequila - R$23,00</span><button onclick="addToCart('Tequila', 23.00)">Adicionar</button></div>
+            <div class="product"><span>Pinga 51 - R$17,00</span><button onclick="addToCart('Pinga 51', 17.00)">Adicionar</button></div>
+            <div class="product"><span>Conhaque - R$19,00</span><button onclick="addToCart('Conhaque', 19.00)">Adicionar</button></div>
+            <div class="product"><span>Dimel - R$28,00</span><button onclick="addToCart('Dimel', 28.00)">Adicionar</button></div>
+            <div class="product"><span>Campari - R$65,00</span><button onclick="addToCart('Campari', 65.00)">Adicionar</button></div>
+            <div class="product"><span>Gin Askov - R$19,00</span><button onclick="addToCart('Gin Askov', 19.00)">Adicionar</button></div>
+            <div class="product"><span>Askov Pura - R$17,50</span><button onclick="addToCart('Askov Pura', 17.50)">Adicionar</button></div>
+            <div class="product"><span>Ice - R$7,00</span><button onclick="addToCart('Ice', 7.00)">Adicionar</button></div>
+            <div class="product"><span>Beats Lata - R$7,50</span><button onclick="addToCart('Beats Lata', 7.50)">Adicionar</button></div>
+            <div class="product"><span>Beats Long - R$9,00</span><button onclick="addToCart('Beats Long', 9.00)">Adicionar</button></div>
+            <div class="product"><span>Smirnoff Ice - R$9,50</span><button onclick="addToCart('Smirnoff Ice', 9.50)">Adicionar</button></div>
+            <div class="product"><span>Black Label - R$197,50</span><button onclick="addToCart('Black Label', 197.50)">Adicionar</button></div>
+            <div class="product"><span>Jack Daniels - R$192,00</span><button onclick="addToCart('Jack Daniels', 192.00)">Adicionar</button></div>
+            <div class="product"><span>Velho Barreiro - R$18,50</span><button onclick="addToCart('Velho Barreiro', 18.50)">Adicionar</button></div>
+            <div class="product"><span>Old Star - R$17,00</span><button onclick="addToCart('Old Star', 17.00)">Adicionar</button></div>
+            <div class="product"><span>Passport - R$72,00</span><button onclick="addToCart('Passport', 72.00)">Adicionar</button></div>
+            <div class="product"><span>Natu Nobilis - R$54,00</span><button onclick="addToCart('Natu Nobilis', 54.00)">Adicionar</button></div>
+            <div class="product"><span>White Horse - R$97,50</span><button onclick="addToCart('White Horse', 97.50)">Adicionar</button></div>
+            <div class="product"><span>Red Label - R$125,00</span><button onclick="addToCart('Red Label', 125.00)">Adicionar</button></div>
+            <div class="product"><span>Ballantines - R$120,00</span><button onclick="addToCart('Ballantines', 120.00)">Adicionar</button></div>
+            <div class="product"><span>Smirnoff 1L - R$46,00</span><button onclick="addToCart('Smirnoff 1L', 46.00)">Adicionar</button></div>
+            <div class="product"><span>Askov Sabor 1L - R$19,00</span><button onclick="addToCart('Askov Sabor 1L', 19.00)">Adicionar</button></div>
+            <div class="product"><span>Canelinha - R$23,00</span><button onclick="addToCart('Canelinha', 23.00)">Adicionar</button></div>
+            <div class="product"><span>Dom Bosco - R$19,00</span><button onclick="addToCart('Dom Bosco', 19.00)">Adicionar</button></div>
+            <div class="product"><span>Chapinha - R$14,00</span><button onclick="addToCart('Chapinha', 14.00)">Adicionar</button></div>
+            <div class="product"><span>3 Medallas - R$35,00</span><button onclick="addToCart('3 Medallas', 35.00)">Adicionar</button></div>
+            <div class="product"><span>Pérgola - R$35,00</span><button onclick="addToCart('Pérgola', 35.00)">Adicionar</button></div>
+            <div class="product"><span>Chalise - R$19,00</span><button onclick="addToCart('Chalise', 19.00)">Adicionar</button></div>
+            <div class="product"><span>Dom Feliciano - R$19,00</span><button onclick="addToCart('Dom Feliciano', 19.00)">Adicionar</button></div>
+            <div class="product"><span>Cantinho - R$8,00</span><button onclick="addToCart('Cantinho', 8.00)">Adicionar</button></div>
+            <div class="product"><span>Stempel 355ml - R$6,75</span><button onclick="addToCart('Stempel 355ml', 6.75)">Adicionar</button></div>
+            <div class="product"><span>Stempel 600ml - R$11,00</span><button onclick="addToCart('Stempel 600ml', 11.00)">Adicionar</button></div>
+        </div>
+        <div class="category" id="nao-alcoolicas-aguas">
+            <h2>Águas</h2>
+            <div class="product"><span>Água 500ml - R$3,00</span><button onclick="addToCart('Água 500ml', 3.00)">Adicionar</button></div>
+            <div class="product"><span>Água 1,5L - R$5,00</span><button onclick="addToCart('Água 1,5L', 5.00)">Adicionar</button></div>
+            <div class="product"><span>Água de Coco 1L - R$10,00</span><button onclick="addToCart('Água de Coco 1L', 10.00)">Adicionar</button></div>
+            <div class="product"><span>Água Gás 500ml - R$3,50</span><button onclick="addToCart('Água Gás 500ml', 3.50)">Adicionar</button></div>
+            <div class="product"><span>Água Gás 1,5L - R$6,00</span><button onclick="addToCart('Água Gás 1,5L', 6.00)">Adicionar</button></div>
+            <div class="product"><span>H2O 500ml - R$5,00</span><button onclick="addToCart('H2O 500ml', 5.00)">Adicionar</button></div>
+            <div class="product"><span>H2O 1,5L - R$9,50</span><button onclick="addToCart('H2O 1,5L', 9.50)">Adicionar</button></div>
+            <div class="product"><span>Gatorade - R$7,00</span><button onclick="addToCart('Gatorade', 7.00)">Adicionar</button></div>
+        </div>
+        <div class="category" id="nao-alcoolicas-refris-latas">
+            <h2>Refrigerantes (Latas)</h2>
+            <div class="product"><span>Sprite/Fanta - R$4,50</span><button onclick="addToCart('Sprite/Fanta', 4.50)">Adicionar</button></div>
+            <div class="product"><span>Guaraná Antarctica - R$4,50</span><button onclick="addToCart('Guaraná Antarctica', 4.50)">Adicionar</button></div>
+            <div class="product"><span>Pepsi - R$4,50</span><button onclick="addToCart('Pepsi', 4.50)">Adicionar</button></div>
+            <div class="product"><span>Coca Cola - R$4,50</span><button onclick="addToCart('Coca Cola', 4.50)">Adicionar</button></div>
+            <div class="product"><span>Schwepps - R$5,00</span><button onclick="addToCart('Schwepps', 5.00)">Adicionar</button></div>
+            <div class="product"><span>Kuat - R$4,50</span><button onclick="addToCart('Kuat', 4.50)">Adicionar</button></div>
+            <div class="product"><span>Tônica - R$4,50</span><button onclick="addToCart('Tônica', 4.50)">Adicionar</button></div>
+            <div class="product"><span>Sukita - R$4,00</span><button onclick="addToCart('Sukita', 4.00)">Adicionar</button></div>
+        </div>
+        <div class="category" id="nao-alcoolicas-refris-pet">
+            <h2>Refrigerantes (PET)</h2>
+            <div class="product"><span>Coca-Cola 2L - R$13,00</span><button onclick="addToCart('Coca-Cola 2L', 13.00)">Adicionar</button></div>
+            <div class="product"><span>Sprite 2L - R$10,00</span><button onclick="addToCart('Sprite 2L', 10.00)">Adicionar</button></div>
+            <div class="product"><span>Fanta 2L - R$10,00</span><button onclick="addToCart('Fanta 2L', 10.00)">Adicionar</button></div>
+            <div class="product"><span>Coca Retor 2L - R$9,50</span><button onclick="addToCart('Coca Retor 2L', 9.50)">Adicionar</button></div>
+            <div class="product"><span>Coca Mini - R$3,00</span><button onclick="addToCart('Coca Mini', 3.00)">Adicionar</button></div>
+            <div class="product"><span>Conq. Mini - R$2,50</span><button onclick="addToCart('Conq. Mini', 2.50)">Adicionar</button></div>
+            <div class="product"><span>Coca 600ml - R$7,00</span><button onclick="addToCart('Coca 600ml', 7.00)">Adicionar</button></div>
+            <div class="product"><span>Coca Cola 1L - R$9,00</span><button onclick="addToCart('Coca Cola 1L', 9.00)">Adicionar</button></div>
+            <div class="product"><span>Sprite 600ml - R$6,00</span><button onclick="addToCart('Sprite 600ml', 6.00)">Adicionar</button></div>
+            <div class="product"><span>Schwepps 1,5L - R$10,50</span><button onclick="addToCart('Schwepps 1,5L', 10.50)">Adicionar</button></div>
+            <div class="product"><span>Antárctica 2L - R$11,00</span><button onclick="addToCart('Antárctica 2L', 11.00)">Adicionar</button></div>
+            <div class="product"><span>Antárctica 1L - R$8,00</span><button onclick="addToCart('Antárctica 1L', 8.00)">Adicionar</button></div>
+            <div class="product"><span>Conquista 2L - R$8,50</span><button onclick="addToCart('Conquista 2L', 8.50)">Adicionar</button></div>
+            <div class="product"><span>Conquista 600ml - R$5,00</span><button onclick="addToCart('Conquista 600ml', 5.00)">Adicionar</button></div>
+            <div class="product"><span>Quinze 2L - R$7,50</span><button onclick="addToCart('Quinze 2L', 7.50)">Adicionar</button></div>
+            <div class="product"><span>Conti 2L - R$8,50</span><button onclick="addToCart('Conti 2L', 8.50)">Adicionar</button></div>
+            <div class="product"><span>Conti 600ml - R$5,00</span><button onclick="addToCart('Conti 600ml', 5.00)">Adicionar</button></div>
+            <div class="product"><span>Guaraná Mini - R$2,50</span><button onclick="addToCart('Guaraná Mini', 2.50)">Adicionar</button></div>
+        </div>
+        <div class="category" id="nao-alcoolicas-sucos">
+            <h2>Sucos</h2>
+            <div class="product"><span>Del Valle 1L - R$10,00</span><button onclick="addToCart('Del Valle 1L', 10.00)">Adicionar</button></div>
+            <div class="product"><span>Prats 300ml - R$6,00</span><button onclick="addToCart('Prats 300ml', 6.00)">Adicionar</button></div>
+            <div class="product"><span>Kapo - R$4,00</span><button onclick="addToCart('Kapo', 4.00)">Adicionar</button></div>
+            <div class="product"><span>Prats 1,7L - R$23,00</span><button onclick="addToCart('Prats 1,7L', 23.00)">Adicionar</button></div>
+            <div class="product"><span>Life 300ml - R$7,00</span><button onclick="addToCart('Life 300ml', 7.00)">Adicionar</button></div>
+            <div class="product"><span>Life 900ml - R$14,00</span><button onclick="addToCart('Life 900ml', 14.00)">Adicionar</button></div>
+        </div>
+        <div class="category" id="nao-alcoolicas-energeticos">
+            <h2>Energéticos</h2>
+            <div class="product"><span>Big Power 2L - R$12,00</span><button onclick="addToCart('Big Power 2L', 12.00)">Adicionar</button></div>
+            <div class="product"><span>Monster 473ml - R$12,00</span><button onclick="addToCart('Monster 473ml', 12.00)">Adicionar</button></div>
+            <div class="product"><span>Red Bull 250ml - R$13,00</span><button onclick="addToCart('Red Bull 250ml', 13.00)">Adicionar</button></div>
+            <div class="product"><span>One 2L - R$10,00</span><button onclick="addToCart('One 2L', 10.00)">Adicionar</button></div>
+            <div class="product"><span>Bally 2L - R$14,00</span><button onclick="addToCart('Bally 2L', 14.00)">Adicionar</button></div>
+            <div class="product"><span>Red Bull 355ml - R$15,00</span><button onclick="addToCart('Red Bull 355ml', 15.00)">Adicionar</button></div>
+            <div class="product"><span>Bally 473ml - R$10,00</span><button onclick="addToCart('Bally 473ml', 10.00)">Adicionar</button></div>
+            <div class="product"><span>Bally 250ml - R$6,50</span><button onclick="addToCart('Bally 250ml', 6.50)">Adicionar</button></div>
+        </div>
+        <div class="category" id="acompanhamentos-gelo-carvao">
+            <h2>Gelo e Carvão</h2>
+            <div class="product"><span>Gelo Saborizado - R$3,00</span><button onclick="addToCart('Gelo Saborizado', 3.00)">Adicionar</button></div>
+            <div class="product"><span>Carvão 3kg - R$20,00</span><button onclick="addToCart('Carvão 3kg', 20.00)">Adicionar</button></div>
+            <div class="product"><span>Gelo 4,5Kg - R$10,00</span><button onclick="addToCart('Gelo 4,5Kg', 10.00)">Adicionar</button></div>
+            <div class="product"><span>Carvão 6,5Kg - R$30,00</span><button onclick="addToCart('Carvão 6,5Kg', 30.00)">Adicionar</button></div>
+        </div>
+        <div class="category" id="acompanhamentos-espetinhos">
+            <h2>Espetinhos</h2>
+            <div class="product"><span>Linguiça - R$6,00</span><button onclick="addToCart('Linguiça', 6.00)">Adicionar</button></div>
+            <div class="product"><span>Carne - R$7,00</span><button onclick="addToCart('Carne', 7.00)">Adicionar</button></div>
+            <div class="product"><span>Frango - R$7,00</span><button onclick="addToCart('Frango', 7.00)">Adicionar</button></div>
+            <div class="product"><span>Queijo - R$8,00</span><button onclick="addToCart('Queijo', 8.00)">Adicionar</button></div>
+            <div class="product"><span>Costela - R$7,00</span><button onclick="addToCart('Costela', 7.00)">Adicionar</button></div>
+            <div class="product"><span>Kafta - R$6,00</span><button onclick="addToCart('Kafta', 6.00)">Adicionar</button></div>
+            <div class="product"><span>Panceta - R$7,00</span><button onclick="addToCart('Panceta', 7.00)">Adicionar</button></div>
+            <div class="product"><span>Medalhão - R$7,00</span><button onclick="addToCart('Medalhão', 7.00)">Adicionar</button></div>
+            <div class="product"><span>Coração - R$8,00</span><button onclick="addToCart('Coração', 8.00)">Adicionar</button></div>
+        </div>
+    </div>
+    <div class="cart">
+        <h2>Carrinho</h2>
+        <div id="cart-items"></div>
+        <div>Total: R$<span id="cart-total">0.00</span></div>
+        <input type="text" id="customer-name" placeholder="Digite seu nome" required>
+        <button class="checkout" onclick="sendToWhatsApp()">Enviar Pedido</button>
+    </div>
+    <button class="clear-cart" onclick="clearCart()">Limpar Carrinho</button>
+
+    <script>
+        let cart = [];
+
+        function addToCart(name, price) {
+            cart.push({ name, price });
+            updateCart();
+        }
+
+        function updateCart() {
+            const cartItems = document.getElementById('cart-items');
+            cartItems.innerHTML = '';
+            let total = 0;
+            cart.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'cart-item';
+                div.innerHTML = `${item.name} - R$${item.price.toFixed(2)}`;
+                cartItems.appendChild(div);
+                total += item.price;
+            });
+            document.getElementById('cart-total').textContent = total.toFixed(2);
+        }
+
+        function sendToWhatsApp() {
+            const customerName = document.getElementById('customer-name').value;
+            if (!customerName) {
+                alert('Por favor, digite seu nome!');
+                return;
+            }
+            let message = `Pedido BebCom Lounge - Cliente: ${customerName}\n`;
+            cart.forEach(item => {
+                message += `${item.name} - R$${item.price.toFixed(2)}\n`;
+            });
+            message += `Total: R$${document.getElementById('cart-total').textContent}`;
+            const whatsappUrl = `https://wa.me/+5514996130369?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+            cart = []; // Limpa o carrinho após enviar
+            document.getElementById('customer-name').value = ''; // Limpa o campo de nome
+            updateCart();
+        }
+
+        function clearCart() {
+            cart = [];
+            document.getElementById('customer-name').value = '';
+            updateCart();
+        }
+    </script>
+</body>
+</html>
